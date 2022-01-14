@@ -8,17 +8,16 @@ ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-  }
+    background-color: #232323;
+}
 
 li {
     float: left;
 }
 
-li a {
-display: block;
-padding: 14px 16px;
+li:hover {
+    background-color: #4B4B4B;
 }
-
 
 a {
     color:#7894FF;
@@ -26,4 +25,15 @@ a {
 
 a:visited {
     color:#B879FF;
+}
+
+li a {
+    text-decoration: none;
+    display: block;
+    padding: 14px 16px;
+    color: #FFFFFF;
+}
+
+li a:visited{
+    color: #FFFFFF;
 }
