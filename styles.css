@@ -1,0 +1,29 @@
+body{
+    color: white;
+    background-color: black;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+li {
+    float: left;
+}
+
+li a {
+display: block;
+padding: 14px 16px;
+}
+
+
+a {
+    color:#7894FF;
+}
+
+a:visited {
+    color:#B879FF;
+}
