@@ -3,6 +3,13 @@ body{
     background-color: black;
 }
 
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -36,4 +43,10 @@ li a {
 
 li a:visited{
     color: #FFFFFF;
+}
+
+
+footer p {
+    font-size:x-small;
+    text-align: center;
 }
