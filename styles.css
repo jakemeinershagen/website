@@ -10,7 +10,7 @@ body{
     width: 100%;
 }
 
-ul {
+ul.topnav {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -18,11 +18,11 @@ ul {
     background-color: #232323;
 }
 
-li {
+.topnav a {
     float: left;
 }
 
-li:hover {
+.topnav:hover {
     background-color: #4B4B4B;
 }
 
@@ -34,14 +34,14 @@ a:visited {
     color:#B879FF;
 }
 
-li a {
+.topnav a {
     text-decoration: none;
     display: block;
     padding: 14px 16px;
     color: #FFFFFF;
 }
 
-li a:visited{
+.topnav a:visited{
     color: #FFFFFF;
 }
 
