@@ -1,6 +1,7 @@
 body{
     color: white;
     background-color: black;
+    font-family: Arial, sans-serif;
 }
 
 .container {
@@ -59,9 +60,24 @@ footer p {
 }
 
 .socials a {
-    background-color: #4B4B4B;
+    background-color: #232323;
     color: #FFF;
+    text-align: center;
     text-decoration: none;
     margin: .5rem 0;
+    padding: 1rem 0;
     width: clamp(100px, 75%, 400px);
+    border-radius: 10px;
+}
+
+.twitch:hover {
+    background-color: #6441A4;
+}
+
+.youtube:hover{
+    background-color: #A10000;
+}
+
+.discord:hover{
+    background-color: #2932A9;
 }
