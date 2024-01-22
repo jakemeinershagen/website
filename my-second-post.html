@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <title>My Second Post</title>
+    <meta charset="utf-8"/>
+    <meta name="generator" content="Pelican"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://jakemeinershagen.com/theme/css/main.css"/>
+
+        <meta name="tag" content="tech"/>
+        <meta name="tag" content="update"/>
+        <meta name="tag" content="project"/>
+</head>
+<body>
+    <nav><ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/technology">Tech</a></li>
+        <li><a href="/astronomy">Astronomy</a></li>
+        <li><a href="/archives.html">All Articles</a></li>
+        <li><a href="/about-me">About Me</a></li>
+    </ul></nav>
+    <main>
+<h1>My Second Post</h1>
+<address>
+    By         <a href="https://jakemeinershagen.com/author/jake-meinershagen.html">Jake Meinershagen</a>
+</address>
+
+<h1>The Second Post</h1>
+<h2>Back Again</h2>
+<p>Well, if you have read the <a href="my-first-post">first post</a>, <em>more specifically the timestamps</em>, you may be wondering what happened in the intervening 6 months. Essentially, I was trying out WordPress again. I'll try to go into the reasons why I came back to the current setup.</p>
+<h2>Why WordPress?</h2>
+<p>About 6 months ago, I was playing with updating my website to a new stack. At that point, the site was just plain HTML and CSS. I was looking at <a href="https://getpelican.com/">Pelican</a> and doing some playing around with it locally. However, I started getting the feeling that I was constantly working on setting my site up on new technologies, rather than building out meaningful content on the site. So, I figured I would take a detour and just use a site builder. The thought there was that I could then focus on writing content and doing cool things, rather than rebuilding the site again and again. I had used <a href="https://wordpress.com/">WordPress</a> a little in college, so I thought I'd give that a shot.</p>
+<p>It's a good idea.</p>
+<h2>Why not WordPress?</h2>
+<p>So, we are obviously on a Pelican-based stack now, hence the footer. Why didn't the WordPress idea work out?</p>
+<p>Well, turns out I'm fairly particular about how I like my site to look. I know it may not seem like it; I don't have the most modern design style. So, I would use a theme, but then I would want to edit it. As a developer, the idea of taking a theme and making a few CSS tweaks here and there to get it to a reasonable state sounds great. The only problem is that WordPress has theme adjustments locked behind a subscription upgrade. I don't begrudge them this fact, it's a useful feature in a useful application.</p>
+<p>The other reason I didn't love WordPress was that I wanted to be able to write my articles and such locally, and then upload them to the site. Based on some googling it looks like you can do this with plugins, but the ability to install plugins is yet another higher tier.</p>
+<p>Again, I don't think this is unreasonable, especially if I was running a business through the site. This is just a personal site though. So, needing to pay that much for some quality-of-life features didn't seem like a good move for me.</p>
+<p>Long story short, WordPress is a great tool, it's just not what I'm looking for.</p>
+<h2>Deciding on the Current Stack</h2>
+<p>So, there I am, the WordPress idea hasn't worked as well as I wanted it to. Luckily I had done that playing around with Pelican and it was starting to stand out in my mind as the best option. I had already created my own theme, there was a little work I had to do on it over the last week or so, but it was essentially finished. The content files could be done in Markdown. Having the content in Markdown means it's easy to do stuff locally and then transfer it to the site. Markdown also works well with git, which is a nice bonus.</p>
+<p>Okay, I'll use a static site generator for the content of the site. I already have a theme going. The only thing left is to decide how to host it. I mentioned that previous to my excursion into WordPress my site was just handbuilt HTML and CSS. That iteration of the site was hosted on <a href="https://www.netlify.com/">Netlify</a>. Netlify has some nice integrations with Git where you can set it up to build your site when you push to the main branch of a repo. I'm using Git anyway so that seems like the best candidate. I considered setting up a VPS and doing all of that manually, but it's more expensive than Netlify (at least at low traffic levels). Also, I think all of that manual setup goes against the idea of trying to spend less time fiddling with the tech of the site itself, which is an idea that still holds some weight for me. I also considered using an AWS S3 bucket. I used that the first time I set up my website, but I remember there being some charges related to that and Netlify was free.</p>
+<h2>Setting Everything Up</h2>
+<p>This was honestly a really quick process. I already had most of the work done from when I had played with Pelican earlier. I hopped into the repo and refreshed myself on what I had. There was a little bit of polishing to be done on some CSS. I had also started writing a fairly in-depth article for the WordPress site that needed to be transferred over. Then I went back and forth between WordPress and Pelican to make sure that I wasn't missing anything I had added in WordPress. All in all the process took me maybe 6 hours spread out over a couple of days. Then setting up Netlify and changing the DNS records was maybe another hour. Not too bad.</p>
+<h2>Moving Forward.</h2>
+<p>I'm ultimately at a point here where I am happy with the setup. Which is a great relief. So, the plan now is to try to resist spending too much time on the site itself and trying to focus on some other stuff. Then, as I do that I'll try to do some write-ups here and there about what I'm doing. I may still do an article or two on Pelican itself and some of the idiosyncracies I ran into when setting up my theme and site. Overall though, I'm going to work on other stuff.</p>
+<p>See you in the next one,<br>
+Jake Meinershagen</p>
+
+
+<br><br>
+    </main>
+    <div class="footer-background">
+        <footer>
+            <div class="prepend-footer">
+    <p>
+        Tags: 
+            <a href="tag/tech.html">tech</a>
+            <a href="tag/update.html">update</a>
+            <a href="tag/project.html">project</a>
+    
+    </p>
+<p>
+    <em>Created: Jan 22, 2024 10:15 AM</em><br>
+</p>
+            </div>
+            <div class="default-footer">
+                <p>Powered by <a href="https://getpelican.com">Pelican</a></p>
+                <p>&copy; 2023-2024, Jake Meinershagen, All rights reserved unless specified otherwise.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
