@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-        <title>Ping</title>
+        <title>Ping: A Pong Clone</title>
     <meta charset="utf-8"/>
     <meta name="generator" content="Pelican"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -23,12 +23,11 @@
         <li><a href="/about-me">About Me</a></li>
     </ul></nav>
     <main>
-<h1>Ping</h1>
+<h1>Ping: A Pong Clone</h1>
 <address>
     By         <a href="https://jakemeinershagen.com/author/jake-meinershagen.html">Jake Meinershagen</a>
 </address>
 
-<h1>Ping: A Pong Clone</h1>
 <p>So, here we are for game one of the <a href="https://20_games_challenge.gitlab.io/challenge/#1">20 Games Challenge</a>. I wanted to keep the time for development on this one low, so I only really worked on it yesterday. I think the total time was about 5-6 hours. There are definitely some edge cases and bugs I could work out with some dedicated testing, but I would like to move on to the next games. So, I'm going to call it good here and move forward. As with any devlog, I'll mention a few of the more interesting things I ran into yesterday.</p>
 <p>I should note that I'm using <a href="https://godotengine.org/">Godot 4</a> for these projects. I think I forgot to mention that in the first post. This one was done in Godot 4.2.</p>
 <p><a href="https://theminesareshakin.itch.io/ping">The Game is here</a><br>
@@ -39,7 +38,7 @@
 <p>Trying to figure out how to bounce the ball at different angles when it hits the paddle was an interesting question. I wound up googling it and saw an answer in a different language that involved sine and cosine. I decided to click off and try to figure it out myself from that hint. So, I got the good ole unit circle out.</p>
 <p><span class="image-with-caption">
 <img alt="Unit Circle" src="https://jakemeinershagen.com/images/unit-circle.avif">
-Image courtesy of <a href="https://en.wikipedia.org/wiki/Unit_circle#/media/File:Unit_circle_angles_color.svg">wikimedia commons</a>.
+Image courtesy of <a href="https://commons.wikimedia.org/wiki/File:Unit_circle_angles_color.svg">wikimedia commons</a>.
 </span></p>
 <p>I created a relative position of the collision and then moved that to a 0 to 1 scale. This means that when we multiply the relative position by 180 we get an angle on the top half of the unit circle. So, sin is 1 at 90 degrees and cos is 0 at 90 degrees. Which means sin needs to be our  x component. We multiply that x component by the x component of the normal for the collision to make sure we are moving in the correct x direction. The cos at 0 degrees (when the bounce is at the top of the paddle) is 1 but that is the negative y in Godot. So, we just plop a negative on there and we are good.</p>
 <p>I'm not flat-out multiplying by 180 because you can wind up with the ball bouncing straight up and down, which isn't so great for pong. So, we multiply by 170 to get an angle in that range and then add 5 to make that angle centered. Other games I saw clamped the angle to about 45 degrees which is probably a better idea. In that case, we would multiply by 90 and then add 45 to center that.</p>
