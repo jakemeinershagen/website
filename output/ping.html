@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <title>Ping</title>
+    <meta charset="utf-8"/>
+    <meta name="generator" content="Pelican"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://jakemeinershagen.com/theme/css/main.css"/>
+
+        <meta name="tag" content="tech"/>
+        <meta name="tag" content="20Games"/>
+        <meta name="tag" content="devlog"/>
+        <meta name="tag" content="godot"/>
+        <meta name="description" content="A devlog about a pong clone for the 20 Games Challenge." />
+</head>
+<body>
+    <nav><ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/technology">Tech</a></li>
+        <li><a href="/astronomy">Astronomy</a></li>
+        <li><a href="/archives.html">All Articles</a></li>
+        <li><a href="/about-me">About Me</a></li>
+    </ul></nav>
+    <main>
+<h1>Ping</h1>
+<address>
+    By         <a href="https://jakemeinershagen.com/author/jake-meinershagen.html">Jake Meinershagen</a>
+</address>
+
+<h1>Ping: A Pong Clone</h1>
+<p>So, here we are for game one of the <a href="https://20_games_challenge.gitlab.io/challenge/#1">20 Games Challenge</a>. I wanted to keep the time for development on this one low, so I only really worked on it yesterday. I think the total time was about 5-6 hours. There are definitely some edge cases and bugs I could work out with some dedicated testing, but I would like to move on to the next games. So, I'm going to call it good here and move forward. As with any devlog, I'll mention a few of the more interesting things I ran into yesterday.</p>
+<p>I should note that I'm using <a href="https://godotengine.org/">Godot 4</a> for these projects. I think I forgot to mention that in the first post. This one was done in Godot 4.2.</p>
+<p><a href="https://theminesareshakin.itch.io/ping">The Game is here</a><br>
+<a href="https://github.com/jakemeinershagen/ping">The Source Code is here</a></p>
+<h2>Graphics</h2>
+<p>I was able to do all of the graphics with in-engine stuff. I used color rects for the paddles and walls. The only sprite I made was the ball, there wasn't an obvious way to make a circle. I did wind up having a problem where my pixel art was blurry when I first imported it. I remembered this problem from Godot 3, I spent about 15 minutes trying to figure out which import setting it was. Turns out they moved the setting for the filter to the texture section on the node instead of in the import tab. You can also set the default filter for new textures in the project settings. Project Settings &gt; General &gt; Rendering &gt; Textures &gt; Canvas Textures &gt; Set to 'Nearest'. <a href="https://www.youtube.com/watch?v=C-4V8q70qK8">Thanks to this video</a> for being a quick source of that info.</p>
+<h2>Angles</h2>
+<p>Trying to figure out how to bounce the ball at different angles when it hits the paddle was an interesting question. I wound up googling it and saw an answer in a different language that involved sine and cosine. I decided to click off and try to figure it out myself from that hint. So, I got the good ole unit circle out.</p>
+<p><img alt="Unit Circle" src="https://jakemeinershagen.com/images/unit-circle.avif"><br>
+Image courtesy of <a href="https://en.wikipedia.org/wiki/Unit_circle#/media/File:Unit_circle_angles_color.svg">wikimedia commons</a>.</p>
+<p>I created a relative position of the collision and then moved that to a 0 to 1 scale. This means that when we multiply the relative position by 180 we get an angle on the top half of the unit circle. So, sin is 1 at 90 degrees and cos is 0 at 90 degrees. Which means sin needs to be our  x component. We multiply that x component by the x component of the normal for the collision to make sure we are moving in the correct x direction. The cos at 0 degrees (when the bounce is at the top of the paddle) is 1 but that is the negative y in Godot. So, we just plop a negative on there and we are good.</p>
+<p>I'm not flat-out multiplying by 180 because you can wind up with the ball bouncing straight up and down, which isn't so great for pong. So, we multiply by 170 to get an angle in that range and then add 5 to make that angle centered. Other games I saw clamped the angle to about 45 degrees which is probably a better idea. In that case, we would multiply by 90 and then add 45 to center that.</p>
+<p>Here is the code:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># relative position on paddle from 0 to 1</span>
+<span class="k">var</span><span class="w"> </span><span class="n">rel_pos_norm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">collision</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span><span class="o">.</span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">collision</span><span class="o">.</span><span class="n">get_collider</span><span class="p">()</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span>
+<span class="w">                        </span><span class="n">collision</span><span class="o">.</span><span class="n">get_collider_shape</span><span class="p">()</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.5</span>
+<span class="k">var</span><span class="w"> </span><span class="n">angle_in_rad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">deg_to_rad</span><span class="p">((</span><span class="n">rel_pos_norm</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">170</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
+<span class="c1"># here sin is from 0 to 1 and cos is from 1 to -1, top half of unit circle</span>
+<span class="k">var</span><span class="w"> </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">Vector2</span><span class="p">(</span><span class="n">collision</span><span class="o">.</span><span class="n">get_normal</span><span class="p">()</span><span class="o">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sin</span><span class="p">(</span><span class="n">angle_in_rad</span><span class="p">),</span>
+<span class="w">                        </span><span class="o">-</span><span class="nb">cos</span><span class="p">(</span><span class="n">angle_in_rad</span><span class="p">))</span>
+<span class="o">$</span><span class="n">DebugVector</span><span class="o">.</span><span class="n">set_point_position</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">direction</span><span class="p">)</span>
+<span class="n">velocity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">direction</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">SPEED</span>
+</code></pre></div>
+
+<p>A lot of this is easier when you can actually watch it working, so I added a <a href="https://docs.godotengine.org/en/stable/classes/class_line2d.html">Line2D</a> that I could change to show the direction. That is what the <code>$DebugVector</code> is.</p>
+<p>Now that I think about it, it would have been cleaner to just multiply by 90 on a -1 to 1 scale because then my y component would have been sine as one would expect. Or, even better, since the range was already -0.5 to 0.5 I could multiply by 180. This would put our resulting vector in the right half of the unit circle. Oh well.</p>
+<p>Woofenator made a <a href="https://foulleaf.dev/gamedev/2023/03/03/game-1-clong.html">great devlog</a> that was listed in the challenge listing. Their approach to setting the ball angle was interesting and different from what I did. Simpler too.</p>
+<h2>Exporting to HTML</h2>
+<p>I exported the game as an HTML build so I could post it on <a href="https://itch.io/">itch.io</a>. For anyone else doing that with Godot 4, you will need to turn on the experimental feature for SharedArrayBuffer. I don't love having to use an experimental feature to post the game, but it looks necessary. Godot 4 seems to require it<sup id="footref-1"><a href="#footnote-1">[1]</a></sup> with no way to turn it off<sup id="footref-2"><a href="#footnote-2">[2]</a></sup>. It doesn't seem like the experimental feature on Itch will break too much stuff<sup id="footref-3"><a href="#footnote-3">[3]</a></sup>, especially for simple games. So, I guess it's fine. I'll try to keep an eye on whether I see any issues.</p>
+<p>And that's it. Hopefully I'll move on to <a href="https://20_games_challenge.gitlab.io/challenge/#2">Game 2</a> soon. I still haven't decided on which one I want to do. Since one of the goals is to reuse assets, I'm leaning toward breakout. Jetpack Joyride sounds fun too though.</p>
+<p>See you in the next one,<br>
+Jake Meinershagen</p>
+<h2>Sources</h2>
+<ol>
+<li><a href="https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_web.html">https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_web.html</a> <a id="footnote-1" href="#footref-1">↵</a></li>
+<li><a href="https://forum.godotengine.org/t/how-to-disable-sharedarraybuffer-in-godot-4/2815/2">https://forum.godotengine.org/t/how-to-disable-sharedarraybuffer-in-godot-4/2815/2</a> <a id="footnote-2" href="#footref-2">↵</a></li>
+<li><a href="https://itch.io/t/2025776/experimental-sharedarraybuffer-support">https://itch.io/t/2025776/experimental-sharedarraybuffer-support</a> <a id="footnote-3" href="#footref-3">↵</a></li>
+</ol>
+
+<br><br>
+        <a href="https://jakemeinershagen.com/taking-on-the-20-games-challenge.html">Previous</a>
+        <a href="https://jakemeinershagen.com/tables-of-contents.html#20 Games Challenge">TOC</a>
+
+<br><br>
+    </main>
+    <div class="footer-background">
+        <footer>
+            <div class="prepend-footer">
+    <p>
+        Tags: 
+            <a href="tag/tech.html">tech</a>
+            <a href="tag/20games.html">20Games</a>
+            <a href="tag/devlog.html">devlog</a>
+            <a href="tag/godot.html">godot</a>
+    
+    </p>
+<p>
+    <em>Created: Jan 25, 2024 07:31 PM</em><br>
+        <em>Updated: Jan 26, 2024 10:00 AM</em>
+</p>
+            </div>
+            <div class="default-footer">
+                <p>Powered by <a href="https://getpelican.com">Pelican</a></p>
+                <p>&copy; 2023-2024, Jake Meinershagen, All rights reserved unless specified otherwise.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
