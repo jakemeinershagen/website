@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <title>Breakin</title>
+    <meta charset="utf-8"/>
+    <meta name="generator" content="Pelican"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://jakemeinershagen.com/theme/css/main.css"/>
+
+        <meta name="tag" content="tech"/>
+        <meta name="tag" content="20Games"/>
+        <meta name="tag" content="devlog"/>
+        <meta name="tag" content="godot"/>
+        <meta name="description" content="A devlog about a breakout clone for the 20 Games Challenge." />
+</head>
+<body>
+    <nav><ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/technology">Tech</a></li>
+        <li><a href="/astronomy">Astronomy</a></li>
+        <li><a href="/archives.html">All Articles</a></li>
+        <li><a href="/about-me">About Me</a></li>
+    </ul></nav>
+    <main>
+<h1>Breakin</h1>
+<address>
+    By         <a href="https://jakemeinershagen.com/author/jake-meinershagen.html">Jake Meinershagen</a>
+</address>
+
+<p>Back again for game 2 of the <a href="https://20_games_challenge.gitlab.io/challenge/#2">20 Games Challenge</a>. I decided to do a clone of breakout since part of the purpose of game 2 was to reuse assets from game 1. This one took a bit longer since I was working in small bits between other life stuff. In total, I don't think it took signigicantly longer than the first game.</p>
+<p>I was able to reuse a fair bit. I needed to shift a bit of stuff when copying from Ping, since the paddle is the other way. The ball code was pretty reusable. I had to change the calculation for the angle around so that it worked for a horizontal paddle instead of a vertical one.</p>
+<p>There are a couple of workarounds I did. I don't think any of them are too egregious. The most interesting one is when the ball goes behind the paddle and a life is removed. I have a signal from the bounds area to remove a life. I originally had the signal connected to both the bounds.gd script and the ui.gd script. The bounds script would remove the life on the GameState autoload and the ui script would update the lives label. The only problem is that Godot doesn't seem to execute the signals in any order that can be changed in the editor. So, I moved the remove life call to the UI. I just call the remove life to lower the number of lives and then update the text right after. I don't love having the function call in the ui script, but I like it better than the other option I came up with. My other idea had been to do the remove life call in the bounds script and then just update the lives text in the process function on the ui script. However, the way I did it is less resource intensive, so I went that way.</p>
+<p><a href="https://theminesareshakin.itch.io/breakin">The Game is here</a><br>
+<a href="https://github.com/jakemeinershagen/breakin">The Source Code is here</a></p>
+
+<br><br>
+        <a href="https://jakemeinershagen.com/ping.html">Previous</a>
+        <a href="https://jakemeinershagen.com/tables-of-contents.html#20 Games Challenge">TOC</a>
+
+<br><br>
+    </main>
+    <div class="footer-background">
+        <footer>
+            <div class="prepend-footer">
+    <p>
+        Tags: 
+            <a href="tag/tech.html">tech</a>
+            <a href="tag/20games.html">20Games</a>
+            <a href="tag/devlog.html">devlog</a>
+            <a href="tag/godot.html">godot</a>
+    
+    </p>
+<p>
+    <em>Created: Feb 12, 2024 02:23 PM</em><br>
+</p>
+            </div>
+            <div class="default-footer">
+                <p>Powered by <a href="https://getpelican.com">Pelican</a></p>
+                <p>&copy; 2023-2024, Jake Meinershagen, All rights reserved unless specified otherwise.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
