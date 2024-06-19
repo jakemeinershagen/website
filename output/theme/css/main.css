@@ -119,3 +119,15 @@ footer .default-footer p{
     display: block;
     margin: 0 auto;
 }
+
+/*styling for tables*/
+
+table, td, th {
+    border: 1px solid;
+    border-collapse: collapse;
+    border-color: red;
+}
+
+td {
+    text-align: center;
+}
