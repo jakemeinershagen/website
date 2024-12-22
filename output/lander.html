@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <title>Lander</title>
+    <meta charset="utf-8"/>
+    <meta name="generator" content="Pelican"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://jakemeinershagen.com/theme/css/main.css"/>
+
+        <meta name="tag" content="tech"/>
+        <meta name="tag" content="20Games"/>
+        <meta name="tag" content="devlog"/>
+        <meta name="tag" content="godot"/>
+        <meta name="description" content="A devlog about a lunar lander clone for the 20 Games Challenge." />
+</head>
+<body>
+    <nav><ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/technology">Tech</a></li>
+        <li><a href="/astronomy">Astronomy</a></li>
+        <li><a href="/archives.html">All Articles</a></li>
+        <li><a href="/about-me">About Me</a></li>
+    </ul></nav>
+    <main>
+<h1>Lander</h1>
+<address>
+    By         <a href="https://jakemeinershagen.com/author/jake-meinershagen.html">Jake Meinershagen</a>
+</address>
+
+<p><a href="https://theminesareshakin.itch.io/lander">The Game is here</a></p>
+<p><a href="https://github.com/jakemeinershagen/lander">The Source Code is here</a></p>
+<h2><a href="https://youtu.be/tOZ5lUXuci4?si=FqZtc-NBmsvlH5rh&amp;t=160">I'm Back</a></h2>
+<p>Back again for game 11 of the <a href="https://20_games_challenge.gitlab.io/challenge/#game-11-and-beyond">20 Games Challenge</a>. "But Jake, you are posting this after you only finished the second game. What about all the games in between?" I hear you not asking. Well, I got inspired to take a bit of a deviation and make a lunar lander game. Since games 11-20 of the 20 Games Challenge are listed as <em>in my hands</em>, I decided I'd count it as one of my 20.</p>
+<p>This was the first project where I worked on allowing the player to change the zoom of the camera. Luckily doing this with the scroll wheel is not that hard. The camera in Godot already has a zoom attribute. You just need to add and subtract from this to zoom in and out. An improvement that would greatly increase the QOL would be to auto-zoom the camera to show both the ship and the land at all times. I'm not sure how difficult this would be so I left it out of the MVP scope. I have a feeling it would involve some translations between camera coordinates and world coordinates. This improvement would be top of the list when revisiting this game.</p>
+<p>Next, let's talk about terrain. Looking at the <a href="https://20_games_challenge.gitlab.io/games/lander/">requirements listed on the 20 game site</a> we would create a world with varied terrain and some landing spots. Unfortunately, I didn't even know the site had requirements for this game until writing this article. But that's okay, because I came up with my own MVP. So, in my version the land is infinitely generating, but flat. The loading system for this was kind of fun to make. I decided to break things into 100 tile chunks. With hindsight some of the code I use for deciding whether a chunk is valid is more convoluted than it needs to be. I could have just checked if the loaded chunk is outside of the outer limits and unloaded it. This would be a quick optimization when revisiting.</p>
+<p>This brings us to another future expansion: terrain generation. I avoided this for one main reason, I haven't played with noise before and trying to work with it would add a fair bit of time to the development of the game. Also, there are games further down in the list of the first 10 games that will involve noise, so I'll learn it then. Terrain generation that is more interesting than flat terrain is second on the list for a revisit, if a revisit happens.</p>
+<p>This is also my first Godot game with particle effects. I like particle effects. The ones I made were basic and fairly simple to get setup, but I think they add a lot of feel to the game relative to their cost time-wise. Particles are fun.</p>
+<p>A settings menu with volume adjustments was also a first for me. It was pleasantly quick to implement, so I have a feeling most, if not all, of my future games will have one.</p>
+<p>Well, that's about all of the interesting stuff that pops to mind while doing a quick scroll through my git commits. I don't want to spend too much time writing about development instead of actually making things, so I'll end it here.</p>
+<p>Until next time (hopefully with a smaller gap),<br>
+Jake Meinershagen</p>
+
+<br><br>
+        <a href="https://jakemeinershagen.com/breakin.html">Previous</a>
+        <a href="https://jakemeinershagen.com/tables-of-contents.html#20 Games Challenge">TOC</a>
+
+<br><br>
+    </main>
+    <div class="footer-background">
+        <footer>
+            <div class="prepend-footer">
+    <p>
+        Tags: 
+            <a href="tag/tech.html">tech</a>
+            <a href="tag/20games.html">20Games</a>
+            <a href="tag/devlog.html">devlog</a>
+            <a href="tag/godot.html">godot</a>
+    
+    </p>
+<p>
+    <em>Created: Dec 21, 2024 07:15 PM</em><br>
+</p>
+            </div>
+            <div class="default-footer">
+                <p>Powered by <a href="https://getpelican.com">Pelican</a></p>
+                <p>&copy; 2023-2024, Jake Meinershagen, All rights reserved unless specified otherwise.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
