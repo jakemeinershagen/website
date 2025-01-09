@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <title>Toader</title>
+    <meta charset="utf-8"/>
+    <meta name="generator" content="Pelican"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://jakemeinershagen.com/theme/css/main.css"/>
+
+        <meta name="tag" content="tech"/>
+        <meta name="tag" content="20Games"/>
+        <meta name="tag" content="devlog"/>
+        <meta name="tag" content="godot"/>
+        <meta name="description" content="A devlog about a frogger clone for the 20 Games Challenge." />
+</head>
+<body>
+    <nav><ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/technology">Tech</a></li>
+        <li><a href="/astronomy">Astronomy</a></li>
+        <li><a href="/archives.html">All Articles</a></li>
+        <li><a href="/about-me">About Me</a></li>
+    </ul></nav>
+    <main>
+<h1>Toader</h1>
+<address>
+    By         <a href="https://jakemeinershagen.com/author/jake-meinershagen.html">Jake Meinershagen</a>
+</address>
+
+<p><a href="https://theminesareshakin.itch.io/toader">The Game is here</a></p>
+<p><a href="https://github.com/jakemeinershagen/toader">The Source Code is here</a></p>
+<p><a href="https://opengameart.org/content/frogger-assets">The Game Assets are here</a></p>
+<p>Back in the new year for game 3 of the <a href="https://20_games_challenge.gitlab.io/challenge/#3">20 Games Challenge</a>.</p>
+<p>I'll be honest, I wasn't super excited about any of the options for this one. I chose frogger on a bit of a whim. That was kind of a mistake because it reduced the amount of excitement I had to push me through some of the frustrating parts. I made it through though.</p>
+<p>This game was the first time I seriously implemented a state machine. I had some problems when doing that, but it turns out they wound up being due to something else. Overall I like the design pattern and will probably use it in the future. I think the one I created here is general enough that I can drop it in to future games when needed.</p>
+<p>Another problem I had was with comparing Vectors in Godot. I don't know how it hadn't come up yet, but I was trying to compare if one vector was 'less than' another one. I hadn't thought about the assumptions behind what 'less than' means when you have a 2d vector so I would up with a pretty annoying to track bug. In Godot, using the &lt; operator on a Vector2 will first compare if the first element is less than, it will only move on to the second element if the first elements are equal. I've put some examples below:</p>
+<div class="highlight"><pre><span></span><code>(2, 4) &lt; (1, 20) = false
+(1, 3) &lt; (1, 5) = true
+(5, 20) &lt; (6, 6) = true
+</code></pre></div>
+
+<p>This cause me trouble because my assumption was that &lt; would compare the magnitudes of the vectors. However, once we know that the built in operator doesn't do that, it is an easy fix. We simply use the <a href="https://github.com/jakemeinershagen/toader/blob/8082db13af06da1bfd3f4d3004986621765cfa12/scripts/jump.gd#L28">lengths of the vectors for comparison instead</a>.</p>
+<p><code>my_vec_1.length() &lt; my_vec_2.length()</code></p>
+<p>The final cool thing I learned about for this project was the <a href="https://docs.godotengine.org/en/stable/classes/class_visibleonscreennotifier2d.html">VisibleOnScreenNotifier2D</a> node that Godot has. Obviously it is super useful in this project since I have lots of objects moving in and out of the screen. All I had to do was connect the signal for exit_screen to the script on the object and then call queue_free when the signal is emitted. Nice!</p>
+<p>That's it for this one. Happy new year! <br>
+Jake Meinershagen</p>
+
+<br><br>
+        <a href="https://jakemeinershagen.com/breakin.html">Previous</a>
+        <a href="https://jakemeinershagen.com/tables-of-contents.html#20 Games Challenge">TOC</a>
+        <a href="https://jakemeinershagen.com/lander.html">Next</a>
+
+<br><br>
+    </main>
+    <div class="footer-background">
+        <footer>
+            <div class="prepend-footer">
+    <p>
+        Tags: 
+            <a href="tag/tech.html">tech</a>
+            <a href="tag/20games.html">20Games</a>
+            <a href="tag/devlog.html">devlog</a>
+            <a href="tag/godot.html">godot</a>
+    
+    </p>
+<p>
+    <em>Created: Jan 09, 2025 06:30 AM</em><br>
+</p>
+            </div>
+            <div class="default-footer">
+                <p>Powered by <a href="https://getpelican.com">Pelican</a></p>
+                <p>&copy; 2023-2024, Jake Meinershagen, All rights reserved unless specified otherwise.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
